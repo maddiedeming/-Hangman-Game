@@ -10,8 +10,8 @@
   <body>
     <nav class="navbar navbar-dark bg-primary justify-content-md-center">
         <div class="navbar-header">
-            <h1 class="text-white d-inline">Hangman</h1>
-            <button id="primaryButton" class="btn btn-success p-2 mb-3 d-inline" onclick="resetGame()">Let's Play!</button>
+            <h1 class="text-white d-block">Hangman</h1>
+            <button id="primaryButton" class="btn btn-success p-2 mb-3 mt-3 d-block mx-auto" onclick="resetGame()">Let's Play!</button>
         </div>
     </nav>
 
@@ -19,30 +19,33 @@
 
     <div class="container-fluid" id="container">
 
+        <div class="row">
+            <div class="invisible card w-25 m-3 bg-secondary" id="guessCard">
+                <div class="card-body">
+                    <h3 class="card-title text-light">Guesses Remaining: </h3>
+                    <h4 class="card-text text-light" id="guessesRemaining">6</h4>
+                </div>
+            </div>
+
+            <div class="invisible card m-3 bg-primary" style="width:auto;" id="wordCard">
+                <div class="card-body">
+                    <h3 class="card-title text-light">Current Word: </h3>
+                    <h4 class="card-text text-light" id="currentWord"></h4>
+                </div>
+            </div>
+        </div>
+
+    <div class="row">
+
         <div class="invisible card w-25 m-3 bg-dark" id="letterCard">
             <div class="card-body">
                 <h3 class="card-title text-light">Letters Guessed: </h3>
                 <h4 class="card-text text-light" id="lettersGuessed"></h4>
             </div>
         </div>
-
-        <div class="invisible card w-25 m-3 bg-secondary" id="guessCard">
-            <div class="card-body">
-                <h3 class="card-title text-light">Guesses Remaining: </h3>
-                <h4 class="card-text text-light" id="guessesRemaining">6</h4>
-            </div>
-        </div>
-
-        <div class="invisible card w-25 m-3 bg-primary" id="wordCard">
-            <div class="card-body">
-                <h3 class="card-title text-light">Current Word: </h3>
-                <h4 class="card-text text-light" id="currentWord"></h4>
-                    <!-- <span class="badge badge-dark">C</span>
-                    <span class="badge badge-dark">A</span>
-                    <span class="badge badge-dark">T</span> -->
-            </div>
-        </div>
     </div>
+    
+</div>
 
 
 
