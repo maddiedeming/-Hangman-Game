@@ -1,9 +1,12 @@
 //Variables
+var listOfWords = ["ARIES", "TAURUS", "GEMINI", "CANCER", "LEO", "VIRGO", "LIBRA", "SCORPIO", "SAGITTARIUS", "CAPRICORN", "AQUARIUS", "PISCES"]
+var randomNumber = Math.floor(Math.random() * listOfWords.length);
+var word = listOfWords[randomNumber];
+console.log(word);
 var guesses = 6;
 var lettersGuessed = [];
 var incorrectLetters = [];
 var correctLetters = [];
-var word = "BLANKET";
 var letterIndex = [];
 //Document Element Variables
 var pageAlert = document.getElementById("alert");
@@ -14,10 +17,15 @@ var pageLetterCard = document.getElementById("letterCard");
 var pageGuessContent = document.getElementById("guessesRemaining");
 var pageLetterContent = document.getElementById("lettersGuessed");
 
+document.onkeydown = function(event){
+    play();
+};
 
 function resetGame(){
     guesses = 6;
     lettersGuessed = []; 
+    var incorrectLetters = [];
+    var correctLetters = [];
     pageAlert.innerHTML = "";
     pageAlert.classList.add('invisible');
     pageAlert.classList.remove('alert-warning');
@@ -62,14 +70,11 @@ function newWord(){
     }
 };
 
-document.onkeydown = function(event){
-        play();
-};
-
 function play(){
     var regex = /^[a-zA-Z]+$/;
     var input = event.keyCode;
     input = String.fromCharCode(input);
+    console.log(input);
     if (input.match(regex)){
         validateEntry(input);
     }
@@ -151,8 +156,6 @@ function successCheck(){
         pageAlert.classList.add('alert-success');
         pageAlert.classList.remove('invisible');
         pageAlert.innerHTML = "Congratulations! You won! Select the Button or press any key to play again!";
-        document.onkeydown = function(event){
-            resetGame();
+        resetGame();
         };
-    }
-};
+    };
