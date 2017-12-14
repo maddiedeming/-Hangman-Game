@@ -1,119 +1,112 @@
 //Variables
+var input = ""
+var regex = /^[a-zA-Z]+$/;
 var listOfWords = ["ARIES", "TAURUS", "GEMINI", "CANCER", "LEO", "VIRGO", "LIBRA", "SCORPIO", "SAGITTARIUS", "CAPRICORN", "AQUARIUS", "PISCES"]
-var randomNumber = Math.floor(Math.random() * listOfWords.length);
-var word = listOfWords[randomNumber];
-console.log(word);
 var guesses = 6;
 var lettersGuessed = [];
 var incorrectLetters = [];
 var correctLetters = [];
 var letterIndex = [];
-//Document Element Variables
-var pageAlert = document.getElementById("alert");
-var pageButton = document.getElementById("primaryButton");
-var pageGuessCard = document.getElementById("guessCard");
-var pageWordCard = document.getElementById("wordCard");
-var pageLetterCard = document.getElementById("letterCard");
-var pageGuessContent = document.getElementById("guessesRemaining");
-var pageLetterContent = document.getElementById("lettersGuessed");
-
-document.onkeydown = function(event){
-    play();
-};
+var newLetter = "";
+var text = "";
+var t = "";
+var word = "";
+var randomNumber = 0;
+var wordLength = 0;
+var game = "start"
 
 function resetGame(){
     guesses = 6;
-    lettersGuessed = []; 
-    var incorrectLetters = [];
-    var correctLetters = [];
-    pageAlert.innerHTML = "";
-    pageAlert.classList.add('invisible');
-    pageAlert.classList.remove('alert-warning');
-    pageAlert.classList.remove('alert-danger');
-    pageAlert.classList.remove('alert-success');
-    pageButton.innerHTML = "Play Again"
-    pageButton.classList.remove('btn-success');
-    pageButton.classList.add('btn-info');
-    pageGuessCard.classList.remove('invisible');
-    pageWordCard.classList.remove('invisible');
-    pageLetterCard.classList.remove('invisible');
-    pageGuessContent.innerHTML = guesses;
-    pageGuessCard.classList.remove('bg-warning');
-    pageGuessCard.classList.remove('bg-danger');
-    pageGuessCard.classList.add('bg-secondary');
-    pageLetterContent.innerHTML = incorrectLetters;
-    for (var li = 0; li < letterIndex.length; li++){  
-        var letterText = document.getElementById(letterIndex[li]);
-        var element = document.getElementsByTagName("span"), li;
-        for (index = element.length - 1; index >= 0; index--) {
-            element[index].parentNode.removeChild(element[index]);
-        }
-    }
+    lettersGuessed = [];
+    incorrectLetters = [];
+    correctLetters = [];
+    letterIndex = [];
+    document.getElementById("alert").innerHTML = "";
+    document.getElementById("alert").classList.remove('alert-warning','alert-danger','alert-success');
+    document.getElementById("alert").classList.add('invisible');
+    document.getElementById("primaryButton").innerHTML = "Play Again"
+    document.getElementById("primaryButton").classList.remove('btn-success');
+    document.getElementById("primaryButton").classList.add('btn-info');
+    document.getElementById("guessCard").classList.remove('bg-warning','bg-danger','invisible');
+    document.getElementById("guessCard").classList.add('bg-secondary');
+    document.getElementById("wordCard").classList.remove('invisible');
+    document.getElementById("letterCard").classList.remove('invisible');
+    document.getElementById("guessesRemaining").innerHTML = guesses;
+    document.getElementById("lettersGuessed").innerHTML = incorrectLetters;
     newWord();
+    document.onkeydown = function(event){
+        input = event.keyCode;
+        input = String.fromCharCode(input);
+        console.log(game);
+        if(input.match(regex) && game !== "end"){
+            validateEntry();
+        }
+        else if(game == "end"){
+            game = "start";
+            resetGame();
+        }
+    };
 };
 
 function newWord(){
-    for (var w = 0; w < word.length; w++){
-        var newLetter = document.createElement("span");
+    var parent = document.getElementById("currentWord"); 
+    while (parent.firstChild) {
+        parent.removeChild(parent.firstChild);
+    }
+    randomNumber = Math.floor(Math.random() * listOfWords.length);
+    word = listOfWords[randomNumber];
+    console.log(word);
+    wordLength = Array.from(new Set(word));
+    wordLength = wordLength.length;
+    for(var w = 0; w < word.length; w++){
+        newLetter = document.createElement("span");
         newLetter.classList.add('badge');
         newLetter.classList.add('badge-dark');
         newLetter.classList.add('m-1');
-        var parent = document.getElementById("currentWord");
         parent.appendChild(newLetter);
-        var text = document.createElement("p");
-        var t = document.createTextNode(word[w]);
+        text = document.createElement("p");
+        text.classList.add('m-1');
+        t = document.createTextNode(word[w]);
         text.appendChild(t);
         newLetter.appendChild(text);  
         text.classList.add('invisible');
         text.style.width = "25px";
-        text.setAttribute("ID", word.indexOf(word[w]));
+        text.setAttribute("ID", w);
     }
 };
 
-function play(){
-    var regex = /^[a-zA-Z]+$/;
-    var input = event.keyCode;
-    input = String.fromCharCode(input);
-    console.log(input);
-    if (input.match(regex)){
-        validateEntry(input);
-    }
-};
-
-function validateEntry(input){
+function validateEntry(){
     var letter = input.toUpperCase();
-    var duplicate = false;
-    var showLetter = "";
     var correctGuess = false;
-    for (var cl = 0; cl < correctLetters.length; cl++){
+    var duplicate = false;
+    console.log(letter);
+    for(var cl = 0; cl < correctLetters.length; cl++){
         if(letter == correctLetters[cl]){
             duplicate = true;
         }
     }
-    for (var il = 0; il < incorrectLetters.length; il++){
+    for(var il = 0; il < incorrectLetters.length; il++){
         if(letter == incorrectLetters[il]){
             duplicate = true;
         }
     }
-    if (duplicate == false){
-        for (var l = 0; l < word.length; l++){
-            if(letter == word[l]){
-                correctLetters.push(word[l]);
-                //lettersGuessed.push(word[l]);
-                letterIndex.push(word.indexOf(word[l]));
-                correctGuess = true
-                for (var e = 0; e < letterIndex.length; e++){
-                    
-                    showLetter = document.getElementById(parseInt(letterIndex[e]));
-                    showLetter.classList.remove('invisible');
-                }
-            }
+    if(duplicate == false){
+        for (var i = word.indexOf(word); i < word.length; i++){
+            if(word.charAt(i) == letter){
+                letterIndex.push(i);              
+                correctGuess = true  
+            }  
+        }       
+        for(var i = 0; i < letterIndex.length; i++){
+            document.getElementById(letterIndex[i]).classList.remove('invisible');
+            correctLetters.push(word.charAt(letterIndex[i]));
         }
+        correctLetters = Array.from(new Set(correctLetters));
+        incorrectLetters = Array.from(new Set(incorrectLetters));
         if(correctGuess == false){
             guesses--;
             incorrectLetters.push(letter);
-            //lettersGuessed.push(letter);
-            pageLetterContent.innerHTML = incorrectLetters;
+            document.getElementById("lettersGuessed").innerHTML = incorrectLetters;
             failCheck(guesses);
         }
         else if(correctGuess == true){
@@ -124,38 +117,33 @@ function validateEntry(input){
 
 function failCheck(guesses){
     if(guesses >= 2){
-        pageGuessContent.innerHTML = guesses;
+        document.getElementById("guessesRemaining").innerHTML = guesses;
     }
     else if(guesses == 1){
-        pageGuessContent.innerHTML = guesses;
-        pageGuessCard.classList.remove('bg-secondary');
-        pageGuessCard.classList.add('bg-warning');
-        pageAlert.classList.remove('invisible');
-        pageAlert.classList.add('alert-warning');
-        alert.innerHTML = "You only have 1 more guess left. Choose wisely!";
+        document.getElementById("guessesRemaining").innerHTML = guesses;
+        document.getElementById("guessCard").classList.remove('bg-secondary');
+        document.getElementById("guessCard").classList.add('bg-warning');
+        document.getElementById("alert").classList.remove('invisible');
+        document.getElementById("alert").classList.add('alert-warning');
+        document.getElementById("alert").innerHTML = "You only have 1 more guess left. Choose wisely!";
     }
-    else {
-        if(guesses == 0){
-            pageGuessContent.innerHTML = guesses;
-            pageGuessCard.classList.remove('bg-warning');
-            pageGuessCard.classList.add('bg-danger');
-            pageAlert.classList.remove('alert-warning');
-            pageAlert.classList.add('alert-danger');
-            pageAlert.innerHTML = "You lose! Select the Button or press any key to play again!";
-        }
-        else if(guesses < 0){
-            resetGame();
-        }
+    else{
+            document.getElementById("guessesRemaining").innerHTML = guesses;
+            document.getElementById("guessCard").classList.remove('bg-warning');
+            document.getElementById("guessCard").classList.add('bg-danger');
+            document.getElementById("alert").classList.remove('alert-warning');
+            document.getElementById("alert").classList.add('alert-danger');
+            document.getElementById("alert").innerHTML = "You lose! Select the Button or press any key to play again!";
+            game = "end"
     }
 };
 
 function successCheck(){
-    if(correctLetters.length == word.length){
-        pageAlert.classList.remove('alert-warning');
-        pageAlert.classList.remove('alert-danger');
-        pageAlert.classList.add('alert-success');
-        pageAlert.classList.remove('invisible');
-        pageAlert.innerHTML = "Congratulations! You won! Select the Button or press any key to play again!";
-        resetGame();
+    if(correctLetters.length == wordLength){
+        document.getElementById("alert").classList.remove('alert-warning','alert-danger','invisible');
+        document.getElementById("alert").classList.add('alert-success');
+        document.getElementById("alert").innerHTML = "Congratulations! You won! Select the Button or press any key to play again!";
+        game = "end"
+        console.log(game);
         };
     };
