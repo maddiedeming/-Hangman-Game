@@ -1,8 +1,14 @@
 //Variables
 var input = ""
 var regex = /^[a-zA-Z]+$/;
-//10 character max
 var listOfWords = ["ARIES", "TAURUS", "GEMINI", "CANCER", "LEO", "VIRGO", "LIBRA", "SCORPIO", "SAGITTARIUS", "CAPRICORN", "AQUARIUS", "PISCES"]
+
+//var perseusFamily = ["PERSEUS","ANDROMEDA","CASSIOPEIA","CETUS","CEPHEUS","PEGASUS","AURIGA"]
+//Son of Zeus + Slayer of Medusa, 
+//var herculesFamily = ["HERCULES","SAGITTA","AQUILA","LYRA","CYGNUS","HYDRA","CRATER","CORVUS","OPHIUCHUS","SERPENS","CENTAURUS","LUPUS","CORONA AUSTRALIS","ARA"]
+//var orionFamily = ["ORION","CANIS MAJOR","LEPUS","MONOCEROS"]
+//var zodiacFamily = ["ARIES", "TAURUS", "GEMINI", "CANCER", "LEO", "VIRGO", "LIBRA", "SCORPIO", "SAGITTARIUS", "CAPRICORN", "AQUARIUS", "PISCES"]
+//var ursaMajorFamily = ["URSA MAJOR","URSA MINOR", "DRACO", "CANES VENATICI", "BOOTES", "CORONA BOREALIS"]
 var guesses = 6;
 var lettersGuessed = [];
 var incorrectLetters = [];
