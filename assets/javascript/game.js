@@ -20,6 +20,12 @@ document.getElementById("primaryButton").onclick = function() {startReset()};
 
 function startReset() {
     game = "start";
+    if(window.innerWidth <= 600){
+        document.getElementById("mobile").classList.remove('invisible');
+    }
+    else{
+        document.getElementById("mobile").classList.add('invisible');
+    }
     resetGame();
 }
 
@@ -45,7 +51,7 @@ function resetGame(){
     document.onkeydown = function(event){
         input = event.keyCode;
         input = String.fromCharCode(input);
-        console.log(game);
+        //console.log(game);
         if(input.match(regex) && game !== "end"){
             validateEntry();
         }
@@ -85,6 +91,7 @@ function newWord(){
 
 function validateEntry(){
     var letter = input.toUpperCase();
+    document.getElementById("myForm").reset();
     var correctGuess = false;
     var duplicate = false;
     console.log(letter);
