@@ -1,6 +1,7 @@
 //Variables
 var input = ""
 var regex = /^[a-zA-Z]+$/;
+//10 character max
 var listOfWords = ["ARIES", "TAURUS", "GEMINI", "CANCER", "LEO", "VIRGO", "LIBRA", "SCORPIO", "SAGITTARIUS", "CAPRICORN", "AQUARIUS", "PISCES"]
 var guesses = 6;
 var lettersGuessed = [];
@@ -15,6 +16,13 @@ var randomNumber = 0;
 var wordLength = 0;
 var game = "start"
 
+document.getElementById("primaryButton").onclick = function() {startReset()};
+
+function startReset() {
+    game = "start";
+    resetGame();
+}
+
 function resetGame(){
     guesses = 6;
     lettersGuessed = [];
@@ -26,7 +34,7 @@ function resetGame(){
     document.getElementById("alert").classList.add('invisible');
     document.getElementById("primaryButton").innerHTML = "Play Again"
     document.getElementById("primaryButton").classList.remove('btn-success');
-    document.getElementById("primaryButton").classList.add('btn-info');
+    document.getElementById("primaryButton").classList.add('btn-dark');
     document.getElementById("guessCard").classList.remove('bg-warning','bg-danger','invisible');
     document.getElementById("guessCard").classList.add('bg-secondary');
     document.getElementById("wordCard").classList.remove('invisible');
@@ -43,7 +51,7 @@ function resetGame(){
         }
         else if(game == "end"){
             game = "start";
-            resetGame();
+            startReset();
         }
     };
 };
@@ -60,17 +68,17 @@ function newWord(){
     wordLength = wordLength.length;
     for(var w = 0; w < word.length; w++){
         newLetter = document.createElement("span");
-        newLetter.classList.add('badge');
-        newLetter.classList.add('badge-dark');
-        newLetter.classList.add('m-1');
+        newLetter.classList.add('badge','badge-dark','mr-1');
+        newLetter.style.width = "32px";
+        newLetter.style.minHeight = "19px";
         parent.appendChild(newLetter);
         text = document.createElement("p");
-        text.classList.add('m-1');
+        text.classList.add('mr-1');
         t = document.createTextNode(word[w]);
         text.appendChild(t);
         newLetter.appendChild(text);  
         text.classList.add('invisible');
-        text.style.width = "25px";
+        text.style.fontSizeAdjust = "0.58";
         text.setAttribute("ID", w);
     }
 };

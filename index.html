@@ -8,42 +8,52 @@
     <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css">
   </head>
   <body>
-    <nav class="navbar navbar-dark bg-primary justify-content-md-center">
-        <div class="navbar-header">
-            <h1 class="text-white d-block">Hangman</h1>
-            <button id="primaryButton" class="btn btn-success p-2 mb-3 mt-3 d-block mx-auto" onclick="resetGame()">Let's Play!</button>
+    <nav class="navbar navbar-dark bg-primary">
+        <div class="container-fluid">
+            <div class="row mx-auto">
+                <div class="navbar-header p-2 m-2 d-block">
+                    <h1 class="text-white">Hangman</h1>
+                </div>
+                <div class="invisible card bg-secondary m-2 d-block" id="guessCard">
+                    <div class="card-body">
+                        <!-- <h4 class="card-title text-light">Guesses<br />Remaining: </h4> -->
+                        <h4 class="card-text text-light" id="guessesRemaining">6</h4>
+                    </div>
+                </div>
+            </div>
+            <div class="row mx-auto">
+                <button id="primaryButton" class="btn btn-success p-2 m-2 d-block" onclick="resetGame()">Let's Play!</button>
+            </div>
         </div>
     </nav>
 
 <div id="alert" class="alert invisible" role="alert"></div>
 
-    <div class="container-fluid" id="container">
+    <div class="container-fluid mx-auto px-0">
         <div class="row">
-            <div class="invisible card w-25 m-3 bg-secondary" id="guessCard">
-                <div class="card-body">
-                    <h3 class="card-title text-light">Guesses Remaining: </h3>
-                    <h4 class="card-text text-light" id="guessesRemaining">6</h4>
-                </div>
-            </div>
-
-            <div class="invisible card m-3 bg-primary" style="width:auto;" id="wordCard">
-                <div class="card-body">
-                    <h3 class="card-title text-light">Current Word: </h3>
-                    <h4 class="card-text text-light" id="currentWord"></h4>
+            <div class="mx-auto col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                <div class="invisible card m-1 bg-primary px-0 mx-auto" id="wordCard">
+                    <div class="card-body px-0 mx-auto">
+                        <h3 class="card-title text-light">Current Word</h3>
+                        <h4 class="card-text text-light" id="currentWord"></h4>
+                    </div>
                 </div>
             </div>
         </div>
 
-    <div class="row">
-
-        <div class="invisible card w-25 m-3 bg-dark" id="letterCard">
-            <div class="card-body">
-                <h3 class="card-title text-light">Letters Guessed: </h3>
-                <h4 class="card-text text-light" id="lettersGuessed"></h4>
+        <div class="row mx-auto px-0">
+            <div class="mx-auto col-lg-12 col-md-12 col-sm-12 col-xs-12 px-0">
+                <div class="invisible card m-1 bg-dark px-0 mx-auto"id="letterCard">
+                    <div class="card-body px-0 mx-auto" style="min-height:130px;">
+                        <h3 class="card-title text-light">Letters Guessed</h3>
+                        <p class="card-text text-light" id="lettersGuessed" style="letter-spacing: 10px;"></p>
+                    </div>
+                </div>
             </div>
         </div>
-    </div>
-    
+
+    </div> 
+
 </div>
 
 
