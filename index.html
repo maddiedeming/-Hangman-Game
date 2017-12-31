@@ -7,64 +7,109 @@
     <!-- CSS -->
     <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css">
   </head>
-  <body>
-    <nav class="navbar navbar-dark bg-primary">
+  <body style="background-color:black;">
+    <nav class="navbar">
         <div class="container-fluid">
             <div class="row mx-auto">
                 <div class="navbar-header p-2 m-2 d-block">
                     <h1 class="text-white">Hangman</h1>
-                </div>
-                <div class="invisible card bg-secondary m-2 d-block" id="guessCard">
-                    <div class="card-body">
-                        <!-- <h4 class="card-title text-light">Guesses<br />Remaining: </h4> -->
-                        <h4 class="card-text text-light" id="guessesRemaining">6</h4>
+                    <h2 class="text-warning"><strong>Constellation<br />Edition</strong></h2>
+                    <button id="primaryButton" class="btn btn-success p-2 m-3 d-inline-block" onclick="resetGame()">Let's Play!</button>
+                    <div class="invisible btn-group p-2" id="buttonGroup">
+                        <button type="button" class="btn btn-info">Hint</button>
+                        <button type="button" class="btn btn-info dropdown-toggle dropdown-toggle-split" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <span class="sr-only">Toggle Dropdown</span>
+                        </button>
+                        <div class="dropdown-menu">
+                            <a class="dropdown-item" id="hintButton1" data-toggle="modal" data-target="#modalOne">Hint #1</a>
+                            <a class="dropdown-item" id="hintButton2" data-toggle="modal" data-target="#modalTwo">Hint #2</a>
+                        </div>
+                    </div>
+                    <div id="modalOne" class="modal fade" role="dialog">
+                            <div class="modal-dialog">
+                                <div class="modal-content" style="background-image:url(assets/images/starry-background.gif); background-size:cover; background-repeat:no-repeat; border:5px solid black;">
+                                    <div class="modal-header" style="border:none;">
+                                        <h4 class="modal-title" style="color:white;">Constellation Family</h4>
+                                    </div>
+                                    <div id="modalBodyOne" class="modal-body" style="color:#ffc107;">
+                                    </div>
+                                    <div class="modal-footer" style="border:none;">
+                                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    <div id="modalTwo" class="modal fade" role="dialog">
+                        <div class="modal-dialog">
+                            <div class="modal-content" style="background-image:url(assets/images/starry-background.gif); background-size:cover; background-repeat:no-repeat; border:5px solid black;">
+                                <div class="modal-header" style="border:none;">
+                                    <h4 class="modal-title" style="color:white;">Random Fact</h4>
+                                </div>
+                                <div id="modalBodyTwo" class="modal-body" style="color:#ffc107;">
+                                </div>
+                                <div class="modal-footer" style="border:none;">
+                                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
-            </div>
-            <div class="row mx-auto">
-                <button id="primaryButton" class="btn btn-success p-2 m-2 d-block" onclick="resetGame()">Let's Play!</button>
+                <div class="p-2 m-2 d-block">
+                    <img class="invisible" src="" id="constellationImage" style="width:300px; height:250px; background-color:black;">
+                </div>
             </div>
         </div>
     </nav>
 
-<div id="alert" class="alert invisible" role="alert"></div>
-
-    <div class="container-fluid mx-auto px-0">
+    <div class="container-fluid">
         <div class="row">
-            <div class="mx-auto col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                <div class="invisible card m-1 bg-primary px-0 mx-auto" id="wordCard">
-                    <div class="card-body px-0 mx-auto">
-                        <h3 class="card-title text-light">Current Word</h3>
-                        <h4 class="card-text text-light" id="currentWord"></h4>
-                    </div>
+            <div id="alert" role="alert" class="alert invisible rounded-0 mx-auto" style="width:100%; text-align:center; position:absolute; z-index: 1;"></div>
+        </div>
+        <div class="row">
+            <div class="invisible card px-0 mx-auto" id="wordCard" style="background-color:black;">
+                <div class="card-body px-0 mx-auto">
+                    <h3 class="card-title text-light">Current Word</h3>
+                    <h4 class="card-text text-light" id="currentWord"></h4>
                 </div>
             </div>
         </div>
         <div class="row">
-                <div class="mx-auto col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                    <divclass="mx-auto">
-                        <form class="mx-auto" id="myForm">
-                            <input id="mobile" class="mx-auto invisible" type="text" style="max-width:600px; width:100%;">
-                        </form>
+            <form id="myForm" style="width:100%;">
+                <input id="mobile" class="invisible" type="text" style="width:100%; text-align:center;" placeholder="Enter a Letter Here!">
+            </form>
+        </div>
+        <div class="row">
+            <div class="mx-auto col-lg-4 col-md-4 col-sm-4 col-xs-4 px-0">
+                <div class="invisible card bg-dark px-0 mx-auto rounded-0" id="winCard">
+                    <div class="card-body px-0 mx-auto" style="min-height:111px;">
+                        <h3 class="card-title text-light">Wins</h3>
+                        <h5 class="card-text text-light" id="numberOfWins" style="letter-spacing: 10px;">0</h5>
                     </div>
                 </div>
             </div>
-        <div class="row mx-auto px-0">
-            <div class="mx-auto col-lg-12 col-md-12 col-sm-12 col-xs-12 px-0">
-                <div class="invisible card m-1 bg-dark px-0 mx-auto"id="letterCard">
-                    <div class="card-body px-0 mx-auto" style="min-height:130px;">
-                        <h3 class="card-title text-light">Letters Guessed</h3>
-                        <p class="card-text text-light" id="lettersGuessed" style="letter-spacing: 10px;"></p>
+            <div class="mx-auto col-lg-4 col-md-4 col-sm-4 col-xs-4 px-0">
+                <div class="invisible card bg-secondary px-0 mx-auto rounded-0" id="letterCard">
+                    <div class="card-body px-0 mx-auto" style="min-height:111px;">
+                        <h3 class="card-title text-dark">Letters Guessed</h3>
+                        <h5 class="card-text text-dark" id="lettersGuessed" style="letter-spacing: 10px;"></h5>
+                    </div>
+                </div>
+            </div>            
+            <div class="mx-auto col-lg-4 col-md-4 col-sm-4 col-xs-4 px-0">
+                <div class="invisible card bg-dark mx-auto rounded-0" id="guessCard">
+                    <div class="card-body px-0 mx-auto" style="min-height:111px;">
+                        <h3 class="card-title text-light">Lives Remaining</h3>
+                        <h5 class="card-text text-light" id="guessesRemaining">6</h5>
                     </div>
                 </div>
             </div>
         </div>
-
-    </div> 
-
-</div>
-
-
+        <div class="invisible row">
+            <audio id="winningSong">
+                <source src="assets/audio/constellations.mp3">
+            </audio>
+        </div>
+    </div>
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.6/umd/popper.min.js"></script>
