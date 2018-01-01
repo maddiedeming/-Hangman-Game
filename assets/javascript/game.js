@@ -326,9 +326,22 @@ function resetGame(){
             validateEntry();
         }
         else if(game == "end"){
-            document.getElementById("myForm").reset();
-            game = "start";
-            startReset();
+            if(constellations.length > 0){
+                document.getElementById("myForm").reset();
+                game = "start";
+                startReset();
+            }
+            else{
+                document.getElementById("myForm").reset();
+                document.getElementById("primaryButton").classList.add("invisible");
+                document.getElementById("buttonGroup").classList.add("invisible");
+                document.getElementById("alert").innerHTML = "";
+                document.getElementById("alert").innerHTML = "Winner! You have won every round! Refresh the page to start over.";
+                document.getElementById("wordCard").classList.add("invisible");
+                document.getElementById("winCard").classList.add("invisible");
+                document.getElementById("letterCard").classList.add("invisible");
+                document.getElementById("guessCard").classList.add("invisible");
+            }
         }
     };
 };
@@ -343,9 +356,8 @@ function newWord(){
     $('#primaryButton').tooltip({title: "Select this button or type any key to play!", trigger: "hover", placement: "left"});     
     
     document.getElementById("constellationImage").classList.remove("invisible");
-    document.getElementById("constellationImage").src=constellations[randomNumber].image;
+    document.getElementById("constellationImage").src = constellations[randomNumber].image;
     word = word.toUpperCase();
-    console.log(word);
         while (document.getElementById("modalBodyOne").firstChild) {
             document.getElementById("modalBodyOne").removeChild(document.getElementById("modalBodyOne").firstChild);
         }
@@ -355,7 +367,7 @@ function newWord(){
         var modalOneParent = document.getElementById("modalBodyOne");
         var modalOneElement = document.createElement("p");
         modalOneParent.appendChild(modalOneElement); 
-        var modalOneText = document.createTextNode("This is a constellation of the " + constellations[randomNumber].family + ".");
+        var modalOneText = document.createTextNode("This is a constellation of the " + constellations[randomNumber].family + " family.");
         modalOneElement.appendChild(modalOneText); 
         var modalTwoParent = document.getElementById("modalBodyTwo");
         var modalTwoElement = document.createElement("p");
@@ -457,8 +469,8 @@ function successCheck(){
         document.getElementById("alert").innerHTML = "Congratulations! You won! Select the Button or press any key to play again!";
         wins++;
         playAudio();
-        game = "end"
-        delete constellations[randomNumber];
+        game = "end";
+        constellations.splice(randomNumber,1);
         };
     };
 //Play song on winning guess
